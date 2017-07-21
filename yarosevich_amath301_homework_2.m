@@ -182,12 +182,22 @@ clc;clear all;close all;
 theta = 0:.05*pi:2*pi;
 r = 0:.5:20;
 [TH, R] = meshgrid(theta, r);
-elecOrbit(TH, R)
-% [X, Y] = pol2cart(TH, R);
-% surf(X, Y, elecOrbit(TH, R))
+f = [TH R];
+F = elecOrbit(f);
+[X, Y] = pol2cart(TH, R);
+surf(X, Y, F)
 
-function F = elecOrbit(TH, R)
-    e = exp(1);
-    F = abs(sqrt(2)/81*pi*(6*R - R^2)*e^(-R/3)*cos(TH))^2;
-end
+%% Exercise 3.b.)
+
+A23 = 0; A24 = 0;A25 = 0;A26 = 0;
+
+A23 = fminsearch('elecOrbit2', [0 1]);
+A24 = fminsearch('elecOrbit2', [0 10]);
+A25 = fminsearch('elecOrbit2', [pi 1]);
+A26 = fminsearch('elecOrbit2', [pi 10]);
+
+%% Exercise 3.c.)
+
+
+
 
