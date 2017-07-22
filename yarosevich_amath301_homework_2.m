@@ -198,6 +198,47 @@ A26 = fminsearch('elecOrbit2', [pi 10]);
 
 %% Exercise 3.c.)
 
+tol = 1.e-4;
+g1 = [0 1];g2 = [0 10];g3 = [pi 1];g4 = [pi 10];
+guesses = [0 1;0 10;pi 1;pi 10];
+delta = 1;
+x = g1;
+while norm(delta, 2) < norm(x0*tol, 2)
+    G = first_grad([x0]);
+    DG = second_grad([x0]);
+    delta = DG\G;
+    x0 = x - delta;
+end
+    
+
+
+
+%% Exercise 4.a.)
+clc;close all;clear all;
+
+f = [40; 50; 75];
+save A31.dat f -ASCII
+
+%% Exercise 4.b.)
+A = [.1 .23 .31;
+    .22 .25 .38;
+    -.1 -.23 -.31;
+    .22+.15 .25+.17 .38+.27;
+    0 0 .31+.38+.27;
+    -1 0 0;
+    0 -1 0;
+    0 0 -1];
+b = [5; 7; -4; 15; 2; -2; -3; -1];
+
+save A32.dat A -ASCII
+save A33.dat b -ASCII
+%% Exercise 4.c.)
+
+x = linprog(f, A, b);
+x_real = round(x);
+
+save A34.dat x_real -ASCII
+
 
 
 
