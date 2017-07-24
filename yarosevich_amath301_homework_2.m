@@ -96,11 +96,11 @@ R_11 = sum(t.*salmon_data); R_21 = sum(salmon_data);
 Q = [Q_11 Q_12;Q_21 Q_22];
 R = [R_11; R_21];
 P = Q\R;
-y_coeffs = P(1,1)*t + P(2,1);
-%plot(t, salmon_data)
+%y_coeffs = P(1,1)*t + P(2,1);
+% plot(t, salmon_data)
 %hold on
 %plot(t, y_coeffs, 'g')
-%p = polyfit(t, salmon_data, 1);
+%ptest = polyfit(t, salmon_data, 1);
 %y_coeffs2 =  p(1,1)*t + p(1,2)
 %plot(t, y_coeffs2, 'b--o')
 save A7.dat Q -ASCII
@@ -123,7 +123,7 @@ ycoeffs2 = polyval(poly2, t);
 ycoeffs5 = polyval(poly5, t);
 ycoeffs8 = polyval(poly8, t);
 
-%plot(t, ycoeffs2, 'g')
+% plot(t, ycoeffs2, 'g')
 % hold on
 % plot(t, ycoeffs5, 'b')
 % plot(t, ycoeffs8, 'k')
@@ -135,6 +135,7 @@ ycoeffs8 = polyval(poly8, t);
 extrap2015_2 = polyval(poly2, 78);
 extrap2015_5 = polyval(poly5, 78);
 extrap2015_8 = polyval(poly8, 78);
+
 
 % testextrap = polyval(poly8, t);
 % plot(t, testextrap)
@@ -204,10 +205,10 @@ save A22.dat F -ASCII
 
 A23 = 0; A24 = 0;A25 = 0;A26 = 0;
 
-A23 = fminsearch('elecOrbit2', [0; 1]);
-A24 = fminsearch('elecOrbit2', [0; 10]);
-A25 = fminsearch('elecOrbit2', [pi; 1]);
-A26 = fminsearch('elecOrbit2', [pi; 10]);
+A23 = transpose(fminsearch('elecOrbit2', [0; 1]));
+A24 = transpose(fminsearch('elecOrbit2', [0; 10]));
+A25 = transpose(fminsearch('elecOrbit2', [pi; 1]));
+A26 = transpose(fminsearch('elecOrbit2', [pi; 10]));
 save A23.dat A23 -ASCII
 save A24.dat A24 -ASCII
 save A25.dat A25 -ASCII
@@ -215,21 +216,31 @@ save A26.dat A26 -ASCII
 
 
 %% Exercise 3.c.)
-
-tol = 1.e-4;
 g1 = [0; 1];g2 = [0; 10];g3 = [pi; 1];g4 = [pi; 10];
-delta = [2; 2];
-x = g4;x0 = x;
-iterations = 0;
-while norm(delta, 2) > norm(x0*tol, 2)
-    iterations = iterations + 1;
-    G = first_grad([x0]);
-    DG = second_grad([x0]);
-    delta = DG\G;
-    x0 = x0 - delta;
-end
+A27 = newton_2D(g1);
+A28 = newton_2D(g2);
+A29 = newton_2D(g3);
+A30 = newton_2D(g4);
 
-iterations
+save A27.dat A27 -ASCII
+save A28.dat A28 -ASCII
+save A29.dat A29 -ASCII
+save A30.dat A30 -ASCII
+
+% tol = 1.e-4;
+
+% delta = [2; 2];
+% x = g3;x0 = x;
+% iterations = 0;
+% while norm(delta, 2) > norm(x0*tol, 2)
+%     iterations = iterations + 1;
+%     G = first_grad([x0]);
+%     DG = second_grad([x0]);
+%     delta = DG\G;
+%     x0 = x0 - delta;
+% end
+% 
+% iterations
 %% Exercise 4.a.)
 clc;close all;clear all;
 
