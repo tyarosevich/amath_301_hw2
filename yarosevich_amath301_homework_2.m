@@ -178,6 +178,7 @@ save A19.dat A19 -ASCII
 
 %% Exercise 3.a.)
 clc;clear all;close all;
+e = exp(1);
 
 theta = 0:.05*pi:2*pi;
 r = 0:.5:20;
@@ -186,6 +187,8 @@ f = [TH R];
 F = elecOrbit(f);
 [X, Y] = pol2cart(TH, R);
 surf(X, Y, F)
+xlabel('theta');ylabel('rad');zlabel('height');
+hold on
 
 %% Exercise 3.b.)
 
@@ -199,25 +202,25 @@ A26 = fminsearch('elecOrbit2', [pi 10]);
 %% Exercise 3.c.)
 
 tol = 1.e-4;
-g1 = [0 1];g2 = [0 10];g3 = [pi 1];g4 = [pi 10];
-guesses = [0 1;0 10;pi 1;pi 10];
-delta = 1;
-x = g1;
-while norm(delta, 2) < norm(x0*tol, 2)
+g1 = [0; 1];g2 = [0; 10];g3 = [pi; 1];g4 = [pi; 10];
+delta = [2; 2];
+x = g4;x0 = x;
+iterations = 0;
+while norm(delta, 2) > norm(x0*tol, 2)
+    iterations = iterations + 1;
     G = first_grad([x0]);
     DG = second_grad([x0]);
     delta = DG\G;
-    x0 = x - delta;
+    x0 = x0 - delta;
 end
-    
 
-
-
+iterations
 %% Exercise 4.a.)
 clc;close all;clear all;
 
-f = [40; 50; 75];
-save A31.dat f -ASCII
+f = [40 50 75];
+A31 = transpose(f);
+save A31.dat A31 -ASCII
 
 %% Exercise 4.b.)
 A = [.1 .23 .31;
@@ -228,7 +231,7 @@ A = [.1 .23 .31;
     -1 0 0;
     0 -1 0;
     0 0 -1];
-b = [5; 7; -4; 15; 2; -2; -3; -1];
+b = [5; 7; -4; 15; 2; -3; -4; -2];
 
 save A32.dat A -ASCII
 save A33.dat b -ASCII
