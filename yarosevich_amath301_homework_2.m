@@ -131,12 +131,6 @@ ycoeffs8 = polyval(poly8, t);
 
 %% Exercise 2. c.)
 
-%Wrote my own polyval function, then remembered how polyval worked. This
-%is probably what the guts of polyval look like, albeit in C though!
-% test55 = 0
-% for n = 1:length(poly5)
-%      test55 = test55 + poly5(n)*78^(length(poly5) -n); 
-% end
 
 extrap2015_2 = polyval(poly2, 78);
 extrap2015_5 = polyval(poly5, 78);
@@ -210,10 +204,10 @@ save A22.dat F -ASCII
 
 A23 = 0; A24 = 0;A25 = 0;A26 = 0;
 
-A23 = fminsearch('elecOrbit2', [0 1]);
-A24 = fminsearch('elecOrbit2', [0 10]);
-A25 = fminsearch('elecOrbit2', [pi 1]);
-A26 = fminsearch('elecOrbit2', [pi 10]);
+A23 = fminsearch('elecOrbit2', [0; 1]);
+A24 = fminsearch('elecOrbit2', [0; 10]);
+A25 = fminsearch('elecOrbit2', [pi; 1]);
+A26 = fminsearch('elecOrbit2', [pi; 10]);
 save A23.dat A23 -ASCII
 save A24.dat A24 -ASCII
 save A25.dat A25 -ASCII
@@ -225,7 +219,7 @@ save A26.dat A26 -ASCII
 tol = 1.e-4;
 g1 = [0; 1];g2 = [0; 10];g3 = [pi; 1];g4 = [pi; 10];
 delta = [2; 2];
-x = g1;x0 = x;
+x = g4;x0 = x;
 iterations = 0;
 while norm(delta, 2) > norm(x0*tol, 2)
     iterations = iterations + 1;
