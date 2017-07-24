@@ -21,6 +21,8 @@ M = -S*(w*U+(w-1)*D);
 A1 = zeros(50,51);
 A1(1:50, 1:50) = M;
 A1(1:50, 51) = c;
+save A1.dat A1 -ASCII
+
 %% Exercise 1.b.)
 
 A2Holder = zeros(100, 52);
@@ -63,6 +65,8 @@ for w_j = 1:0.01:1.99
     A4(iterations,1) = norm((A*x_k - p), Inf);
     
 end
+save A4.dat A4 -ASCII
+
 %% Exercise 1.d.)
 x0 = zeros(50,1) + 1;
 x = x0;
@@ -79,6 +83,10 @@ while ((error > tol) && (iterations < 100000))
     x = M_optimal*x0 + c_optimal;
     error = norm((x-x0), Inf);
 end
+save A5.dat x -ASCII
+save A6.dat iterations -ASCII
+
+
 %% Exercise 2
 clc;close all;clear all;
 load salmon_data.csv
@@ -87,14 +95,18 @@ Q_11 = sum(t.^2); Q_12 = sum(t); Q_21 = Q_12; Q_22 = 77;
 R_11 = sum(t.*salmon_data); R_21 = sum(salmon_data);
 Q = [Q_11 Q_12;Q_21 Q_22];
 R = [R_11; R_21];
-A = Q\R;
-y_coeffs = A(1,1)*t + A(2,1);
+P = Q\R;
+y_coeffs = P(1,1)*t + P(2,1);
 %plot(t, salmon_data)
 %hold on
 %plot(t, y_coeffs, 'g')
 %p = polyfit(t, salmon_data, 1);
 %y_coeffs2 =  p(1,1)*t + p(1,2)
 %plot(t, y_coeffs2, 'b--o')
+save A7.dat Q -ASCII
+save A8.dat R -ASCII
+save A9.dat P -ASCII
+
 
 %% Exercise 2.b.)
 
@@ -189,6 +201,10 @@ F = elecOrbit(f);
 surf(X, Y, F)
 xlabel('theta');ylabel('rad');zlabel('height');
 hold on
+save A20.dat X -ASCII
+save A21.dat Y -ASCII
+save A22.dat F -ASCII
+
 
 %% Exercise 3.b.)
 
@@ -198,13 +214,18 @@ A23 = fminsearch('elecOrbit2', [0 1]);
 A24 = fminsearch('elecOrbit2', [0 10]);
 A25 = fminsearch('elecOrbit2', [pi 1]);
 A26 = fminsearch('elecOrbit2', [pi 10]);
+save A23.dat A23 -ASCII
+save A24.dat A24 -ASCII
+save A25.dat A25 -ASCII
+save A26.dat A26 -ASCII
+
 
 %% Exercise 3.c.)
 
 tol = 1.e-4;
 g1 = [0; 1];g2 = [0; 10];g3 = [pi; 1];g4 = [pi; 10];
 delta = [2; 2];
-x = g4;x0 = x;
+x = g1;x0 = x;
 iterations = 0;
 while norm(delta, 2) > norm(x0*tol, 2)
     iterations = iterations + 1;
